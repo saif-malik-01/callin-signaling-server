@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node index.ts"
+    "start": "node index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
+    "firebase-admin": "^13.4.0",
     "http": "^0.0.1-security",
     "socket.io": "^4.8.1"
   }
