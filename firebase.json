@@ -1,23 +1,8 @@
 {
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "app" 
-      }
-    ]
-  },
-  "functions": {
-    "source": "functions"
+  "projects": {
+    "default": "voip-90d9a"
   },
   "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "rules": "firestore.rules"
   }
 }
