@@ -92,12 +92,14 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", async () => {
     try {
+    if (socket.userId) {
       const docRef = db.collection("users").doc(socket.userId);
-      docRef.set({ socketId: null, status: "offline", lastSeen: new Date() });
-      console.log("User disconnected:", socket.id);
-    } catch (error) {
-      console.error("Error handling disconnect:", error);
+      await docRef.set({ socketId: null, status: "offline", lastSeen: new Date() }, { merge: true });
     }
+    console.log("User disconnected:", socket.id);
+  } catch (error) {
+    console.error("Error handling disconnect:", error);
+  }
   });
 });
 
