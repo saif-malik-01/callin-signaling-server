@@ -1,8 +1,29 @@
 {
-  "projects": {
-    "default": "voip-90d9a"
+  "project_info": {
+    "project_number": "82934491668",
+    "project_id": "voip-90d9a",
+    "storage_bucket": "voip-90d9a.firebasestorage.app"
   },
-  "firestore": {
-    "rules": "firestore.rules"
-  }
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82934491668:android:154199caf79bdb811c1501",
+        "android_client_info": {
+          "package_name": "com.callerapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVxL-ct-KcmnGuV-PNNpHUHejTuPeTQCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }
