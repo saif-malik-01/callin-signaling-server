@@ -156,13 +156,13 @@ io.on("connection", (socket) => {
     });
 
    
-    socket.broadcast.emit("message", `Keyword(s) detected: ${foundKeywords.join(", ")}`);
+ if (foundKeywords.length > 0) {
+      socket.broadcast.emit("message", `Keyword(s) detected: ${foundKeywords.join(", ")}`);
+    }
   });
 
  
-  socket.on("message", (message) => {
-    socket.broadcast.emit("message", `Client said: ${message}`);
-  });
+ 
   
 });
 
