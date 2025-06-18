@@ -135,7 +135,9 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("keywords", (data) => {
+ 
+
+   socket.on("keywords", (data) => {
     const { input } = data;
 
     if (!input || typeof input !== "string") {
@@ -149,17 +151,11 @@ io.on("connection", (socket) => {
       inputLower.includes(keyword.toLowerCase())
     );
 
-    socket.emit("keywords-result", {
+    socket.broadcast.emit("keywords-result", {
       input,
       foundKeywords,
       hasKeywords: foundKeywords.length > 0,
     });
-
-   
- if (foundKeywords.length > 0) {
-      socket.broadcast.emit("message", `Keyword(s) detected: ${foundKeywords.join(", ")}`);
-    }
-  });
 
  
  
