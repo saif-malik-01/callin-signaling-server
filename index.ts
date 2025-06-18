@@ -17,6 +17,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 const db = getFirestore();
+const defaultKeywords = ["sales", "loan", "sell", "sale", "finance", "buy", "offer"];
 
 // Socket.IO connection handler
 io.on("connection", (socket) => {
@@ -133,13 +134,7 @@ io.on("connection", (socket) => {
       console.error("Disconnect error:", error);
     }
   });
-});
 
-const defaultKeywords = ["sales", "loan", "sell", "sale", "finance", "buy", "offer"];
-
-
-// Keyword match via WebSocket
-io.on("connection", (socket) => {
   socket.on("keywords", (data) => {
     const { input } = data;
 
@@ -159,8 +154,20 @@ io.on("connection", (socket) => {
       foundKeywords,
       hasKeywords: foundKeywords.length > 0,
     });
+
+   
+    socket.broadcast.emit("message", `Keyword(s) detected: ${foundKeywords.join(", ")}`);
   });
+
+ 
+  socket.on("message", (message) => {
+    socket.broadcast.emit("message", `Client said: ${message}`);
+  });
+  
 });
+
+
+
 
 // Start server
 server.listen(3000, () => console.log("Server running on port 3000"));
