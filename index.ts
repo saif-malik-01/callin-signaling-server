@@ -135,5 +135,38 @@ io.on("connection", (socket) => {
   });
 });
 
+const defaultKeywords = ["sales", "loan", "sell", "sale", "finance", "buy", "offer"];
+
+
+// // Keyword match via WebSocket
+interface CheckKeywordsData {
+  input: string;
+}
+
+interface KeywordsResult {
+}
+
+io.on("keywords", (data: CheckKeywordsData) => {
+  const { input } = data;
+
+  if (!input || typeof input !== "string") {
+    return io.emit("keywords-result", {
+      error: "Invalid input. Must be a non-empty string.",
+    } as KeywordsResult);
+  }
+
+  const inputLower = input.toLowerCase();
+  const foundKeywords = defaultKeywords.filter(keyword =>
+    inputLower.includes(keyword.toLowerCase())
+  );
+
+  io.emit("keywords-result", {
+    input,
+    foundKeywords,
+    hasKeywords: foundKeywords.length > 0,
+  } as KeywordsResult);
+});
+
+
 // Start server
 server.listen(3000, () => console.log("Server running on port 3000"));
