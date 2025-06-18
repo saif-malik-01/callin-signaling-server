@@ -138,35 +138,29 @@ io.on("connection", (socket) => {
 const defaultKeywords = ["sales", "loan", "sell", "sale", "finance", "buy", "offer"];
 
 
-// // Keyword match via WebSocket
-interface CheckKeywordsData {
-  input: string;
-}
+// Keyword match via WebSocket
+io.on("connection", (socket) => {
+  socket.on("keywords", (data) => {
+    const { input } = data;
 
-interface KeywordsResult {
-}
+    if (!input || typeof input !== "string") {
+      return socket.emit("keywords-result", {
+        error: "Invalid input. Must be a non-empty string.",
+      });
+    }
 
-io.on("keywords", (data: CheckKeywordsData) => {
-  const { input } = data;
+    const inputLower = input.toLowerCase();
+    const foundKeywords = defaultKeywords.filter(keyword =>
+      inputLower.includes(keyword.toLowerCase())
+    );
 
-  if (!input || typeof input !== "string") {
-    return io.emit("keywords-result", {
-      error: "Invalid input. Must be a non-empty string.",
-    } as KeywordsResult);
-  }
-
-  const inputLower = input.toLowerCase();
-  const foundKeywords = defaultKeywords.filter(keyword =>
-    inputLower.includes(keyword.toLowerCase())
-  );
-
-  io.emit("keywords-result", {
-    input,
-    foundKeywords,
-    hasKeywords: foundKeywords.length > 0,
-  } as KeywordsResult);
+    socket.emit("keywords-result", {
+      input,
+      foundKeywords,
+      hasKeywords: foundKeywords.length > 0,
+    });
+  });
 });
-
 
 // Start server
 server.listen(3000, () => console.log("Server running on port 3000"));
